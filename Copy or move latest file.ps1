@@ -162,7 +162,7 @@ Process {
                 else { $fileToMove.Name }
             }
             $copyParams = @{
-                Path        = $fileToMove.FullName
+                LiteralPath = $fileToMove.FullName
                 Destination = Join-Path @joinParam
                 Force       = $true
                 ErrorAction = 'Stop'
