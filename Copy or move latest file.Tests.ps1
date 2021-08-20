@@ -50,6 +50,7 @@ Describe 'copy only the latest file found in the source folder' {
             '1.csv', '2.csv', 
             '1.xlsx'
         ) | ForEach-Object {
+            Start-Sleep -Milliseconds 1
             (New-Item (Join-Path $testParams.SourcePath $_) -ItemType File).FullName
         }
     }
