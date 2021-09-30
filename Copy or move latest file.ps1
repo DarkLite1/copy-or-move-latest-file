@@ -39,6 +39,11 @@
         Inform users by sending an email after running the script on success 
         and failure. When MailTo is empty no email will be sent.
 
+    .NOTES
+        A copied file can be renamed in the destination folder but its 
+        extension cannot be renamed. Renaming an extension in the destination 
+        folder is not supported.
+
     .EXAMPLE
         $params = @{
             ScriptName        = 'Copy latest file'
