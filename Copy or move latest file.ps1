@@ -141,20 +141,15 @@ Begin {
 
 Process {
     Try {
-        #region Create source search parameters
-        $getParams = @{
-            LiteralPath = $SourceFolder
-            File        = $true
-            Force       = $true
-            ErrorAction = 'Stop'
-        }
-        if ($FileExtension) {
-            $getParams.Filter = '*{0}' -f $FileExtension
-        }
-        #endregion
-
         #region Get latest source file
         Try {
+            $getParams = @{
+                LiteralPath = $SourceFolder
+                Filter      = '{0}*{1}' -f $FileNameStartsWith, $FileExtension
+                File        = $true
+                Force       = $true
+                ErrorAction = 'Stop'
+            }
             $fileToMove = Get-ChildItem @getParams | 
             Sort-Object LastWriteTime | Select-Object -Last 1
         }

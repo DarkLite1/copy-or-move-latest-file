@@ -96,12 +96,22 @@ Describe 'copy only the latest file found in the source folder' {
     }
     It 'that begins with a specific string' {
         $testNewParams = $testParams.clone()
+        $testNewParams.Remove('DestinationFileName')
         $testNewParams.FileExtension = '.zip'
-        $testNewParams.DestinationFileName = 'A'
+        $testNewParams.FileNameStartsWith = 'fruit'
         . $testScript @testNewParams
         $actual = Get-ChildItem $testParams.DestinationFolder
         $actual | Should -HaveCount 1
-        $actual.Name | Should -Be 'A.csv'
+        $actual.Name | Should -Be 'fruitApple.zip'
+    }
+    It 'copy nothing when no match is found' {
+        $testNewParams = $testParams.clone()
+        $testNewParams.Remove('DestinationFileName')
+        $testNewParams.FileExtension = '.zip'
+        $testNewParams.FileNameStartsWith = 'notFound'
+        . $testScript @testNewParams
+        $actual = Get-ChildItem $testParams.DestinationFolder
+        $actual | Should -BeNullOrEmpty
     }
     It "and remove the source file when action is 'Move'" {
         $testNewParams = $testParams.clone()
