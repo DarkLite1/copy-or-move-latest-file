@@ -4,9 +4,11 @@
 
     .DESCRIPTION
         Copy or move the most recently edited file found in the source folder 
-        to the destination folder. When FileExtension is given, only files 
-        matching the extension will be searched. When DestinationFileName is 
-        given, the file will be renamed in the destination folder.
+        to the destination folder. When 'FileExtension' is given, only files 
+        matching the extension will be searched. When 'DestinationFileName' is 
+        given, the file will be renamed in the destination folder. When 
+        'FileNameStartsWith' is given, only files that start with that specific
+        string are checked in the source folder.
 
     .PARAMETER Action
         When set to 'Copy' the source file will be left alone and when set to
