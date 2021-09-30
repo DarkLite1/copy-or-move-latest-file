@@ -41,8 +41,8 @@
 
     .EXAMPLE
         $params = @{
-            ScriptName      = 'Copy latest file'
-            Action          = 'Copy'
+            ScriptName        = 'Copy latest file'
+            Action            = 'Copy'
             SourceFolder      = 'C:\FolderA'
             DestinationFolder = 'C:\FolderB'
         }
@@ -52,12 +52,12 @@
 
     .EXAMPLE
         $params = @{
-            ScriptName      = 'Move latest txt file'
-            Action          = 'Move'
+            ScriptName        = 'Move latest txt file'
+            Action            = 'Move'
             SourceFolder      = 'C:\FolderA'
             DestinationFolder = 'C:\FolderB'
-            FileExtension   = '.txt'
-            OverWrite       = $true
+            FileExtension     = '.txt'
+            OverWrite         = $true
         }
         . $scriptPath @params
 
@@ -69,16 +69,16 @@
         $params = @{
             ScriptName          = 'Copy latest csv file'
             Action              = 'Copy'
-            SourceFolder          = 'C:\FolderA'
-            DestinationFolder     = 'C:\FolderB'
+            SourceFolder        = 'C:\FolderA'
+            DestinationFolder   = 'C:\FolderB'
             FileExtension       = '.csv'
-            DestinationFileName = 'copied.txt'
+            DestinationFileName = 'copied'
         }
         . $scriptPath @params
 
         Copy the most recent file from FolderA to FolderB that has file 
         extension '.csv' and rename the file in the destination folder to 
-        'copied.txt'. Because 'OverWrite' is not used an existing file on the 
+        'copied.csv'. Because 'OverWrite' is not used an existing file on the 
         destination will not be over written. You can however add this switch 
         if you want that. 
 #>

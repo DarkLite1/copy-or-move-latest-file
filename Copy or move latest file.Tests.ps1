@@ -13,7 +13,7 @@ BeforeAll {
         Action              = 'Copy'
         SourceFolder        = (New-Item 'TestDrive:/A' -ItemType Directory).FullName 
         DestinationFolder   = (New-Item 'TestDrive:/B' -ItemType Directory).FullName 
-        DestinationFileName = 'copiedFile.csv'
+        DestinationFileName = 'copiedFile'
         FileExtension       = 'csv'
         OverWrite           = $true
         MailTo              = @('bob@contoso.com')
