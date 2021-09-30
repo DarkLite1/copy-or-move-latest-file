@@ -25,9 +25,8 @@
         the latest file is selected regardless of extension (Ex. '.csv').
 
     .PARAMETER FileNameStartsWith
-        Only a file that starts with a specific string will be copied or moved
-        to the destination folder. Files that do not match the string will be 
-        excluded.
+        Only files in the source folder where the file name starts with a 
+        specific string will be searched, other files will be excluded.
 
     .PARAMETER DestinationFileName
         New name for the copied file without its extension (Ex. 'Copied').
