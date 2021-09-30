@@ -50,10 +50,15 @@
             Action            = 'Copy'
             SourceFolder      = 'C:\FolderA'
             DestinationFolder = 'C:\FolderB'
+            MailTo            = 'gmail@chuckNorris.com'
         }
         . $scriptPath @params
 
-        Copy the most recent file from FolderA to FolderB
+        Copy the most recent file from FolderA to FolderB, regardless its file
+        extension or file name, and send a summary mail to Chuck Norris. 
+        
+        In case the file is already in the destination folder it will not be 
+        overwritten because 'OverWrite' is not used.
 
     .EXAMPLE
         $params = @{
@@ -67,8 +72,10 @@
         . $scriptPath @params
 
         Move the most recent file from FolderA to FolderB that has file 
-        extension '.txt' and over write the file in the destination when it 
-        exists already
+        extension '.txt', regardless of its name, and overwrite the file in the 
+        destination folder when it already exists. 
+        
+        No mail is sent because 'MailTo' is not used.
 
     .EXAMPLE
         $params = @{
@@ -83,9 +90,30 @@
 
         Copy the most recent file from FolderA to FolderB that has file 
         extension '.csv' and rename the file in the destination folder to 
-        'copied.csv'. Because 'OverWrite' is not used an existing file on the 
-        destination will not be over written. You can however add this switch 
-        if you want that. 
+        'copied.csv'. 
+        
+        Because 'OverWrite' is not used an existing file in the destination 
+        folder will not be overwritten. No mails are sent because 'MailTo'
+        is not used either.
+
+    .EXAMPLE
+        $params = @{
+            ScriptName          = 'Copy latest zip file that starts with backup'
+            Action              = 'Copy'
+            SourceFolder        = 'C:\FolderA'
+            DestinationFolder   = 'C:\FolderB'
+            DestinationFileName = 'latest backup'
+            FileExtension       = '.zip'
+            FileNameStartsWith  = 'backup'
+            OverWrite           = $true
+            MailTo              = 'gmail@chuckNorris.com'
+        }
+        . $scriptPath @params
+
+        Copy the most recent file from FolderA to FolderB that has file 
+        extension '.zip' and a file name that starts with 'backup'. Rename
+        the file in the destination folder to 'latest backup.zip' and overwrite 
+        the file when it already exists. Send a summary mail to Chuck Norris.
 #>
                 
 Param (
