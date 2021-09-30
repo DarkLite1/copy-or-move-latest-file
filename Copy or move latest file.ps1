@@ -12,15 +12,20 @@
         When set to 'Copy' the source file will be left alone and when set to
         'Move' the source file will be deleted after copying.
 
-    .PARAMETER SourcePath
+    .PARAMETER SourceFolder
         Folder where to search for the most recently edited file.
 
-    .PARAMETER DestinationPath
+    .PARAMETER DestinationFolder
         Folder to where to copy the most recently edited file.
 
     .PARAMETER FileExtension
-        The file extension to look for. If none is given the latest file
-        is selected regardless of extension (Ex. '.csv').
+        The file extension to look for in the source folder. If none is given 
+        the latest file is selected regardless of extension (Ex. '.csv').
+
+    .PARAMETER FileNameStartsWith
+        Only a file that starts with a specific string will be copied or moved
+        to the destination folder. Files that do not match the string will be 
+        excluded.
 
     .PARAMETER DestinationFileName
         New name for the copied file without its extension (Ex. 'Copied').
@@ -38,8 +43,8 @@
         $params = @{
             ScriptName      = 'Copy latest file'
             Action          = 'Copy'
-            SourcePath      = 'C:\FolderA'
-            DestinationPath = 'C:\FolderB'
+            SourceFolder      = 'C:\FolderA'
+            DestinationFolder = 'C:\FolderB'
         }
         . $scriptPath @params
 
@@ -49,8 +54,8 @@
         $params = @{
             ScriptName      = 'Move latest txt file'
             Action          = 'Move'
-            SourcePath      = 'C:\FolderA'
-            DestinationPath = 'C:\FolderB'
+            SourceFolder      = 'C:\FolderA'
+            DestinationFolder = 'C:\FolderB'
             FileExtension   = '.txt'
             OverWrite       = $true
         }
@@ -64,8 +69,8 @@
         $params = @{
             ScriptName          = 'Copy latest csv file'
             Action              = 'Copy'
-            SourcePath          = 'C:\FolderA'
-            DestinationPath     = 'C:\FolderB'
+            SourceFolder          = 'C:\FolderA'
+            DestinationFolder     = 'C:\FolderB'
             FileExtension       = '.csv'
             DestinationFileName = 'copied.txt'
         }
@@ -82,14 +87,15 @@ Param (
     [Parameter(Mandatory)]
     [String]$ScriptName,
     [Parameter(Mandatory)]
-    [String]$SourcePath,
+    [String]$SourceFolder,
     [Parameter(Mandatory)]
-    [String]$DestinationPath,
+    [String]$DestinationFolder,
     [Parameter(Mandatory)]
     [ValidateSet('Copy', 'Move')]
     [String]$Action,
     [String]$DestinationFileName,
     [String]$FileExtension,
+    [String]$FileNameStartsWith,
     [Switch]$OverWrite,
     [String[]]$MailTo,
     [String]$LogFolder = $env:POWERSHELL_LOG_FOLDER,
@@ -132,7 +138,7 @@ Process {
     Try {
         #region Create source search parameters
         $getParams = @{
-            LiteralPath = $SourcePath
+            LiteralPath = $SourceFolder
             File        = $true
             Force       = $true
             ErrorAction = 'Stop'
@@ -148,14 +154,14 @@ Process {
             Sort-Object LastWriteTime | Select-Object -Last 1
         }
         Catch {
-            throw "Failed checking the source folder '$SourcePath': $_"
+            throw "Failed checking the source folder '$SourceFolder': $_"
         }
         #endregion
 
         if ($fileToMove) {
             #region Create destination copy parameters
             $joinParam = @{
-                Path      = $DestinationPath
+                Path      = $DestinationFolder
                 ChildPath = if ($DestinationFileName) {
                     $DestinationFileName + $fileToMove.Extension
                 }
@@ -183,7 +189,7 @@ Process {
                 Copy-Item @copyParams 
             }
             Catch {
-                throw "Failed to copy file '$($fileToMove.FullName)' to the destination folder '$DestinationPath': $_"
+                throw "Failed to copy file '$($fileToMove.FullName)' to the destination folder '$DestinationFolder': $_"
             }
             #endregion
 
@@ -197,7 +203,7 @@ Process {
             #endregion
         }
         else {
-            Write-Warning "No file found in source folder '$SourcePath'"
+            Write-Warning "No file found in source folder '$SourceFolder'"
         }
     }
     Catch {
@@ -223,7 +229,7 @@ End {
                         " with <b>extension '$FileExtension'</b>" 
                     }
                 )
-                $(" from the <a href=`"$SourcePath`">source folder</a> to the <a href=`"$DestinationPath`">destination folder</a>")
+                $(" from the <a href=`"$SourceFolder`">source folder</a> to the <a href=`"$DestinationFolder`">destination folder</a>")
                 $(if ($OverWrite) { 
                         " and <b>over write the destination file</b> when it exists already" 
                     }
