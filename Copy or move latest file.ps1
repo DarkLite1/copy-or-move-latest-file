@@ -146,7 +146,7 @@ Begin {
         #region Logging
         try {
             $LogParams = @{
-                LogFolder    = New-Item -Path "$LogFolder\File and folder" -ItemType 'Directory' -Force -ErrorAction 'Stop'
+                LogFolder    = New-Item -Path $LogFolder -ItemType 'Directory' -Force -ErrorAction 'Stop'
                 Name         = $ScriptName
                 Date         = 'ScriptStartTime'
                 NoFormatting = $true
