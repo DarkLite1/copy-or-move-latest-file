@@ -277,7 +277,7 @@ End {
                     </tr>
                     <tr>
                         <th>Source file</th>
-                        <td><a href=`"$($fileToMove.FullName)`">$($fileToMove.FullName)</a></td>
+                        <td><a href=`"$($fileToMove.FullName)`">$($fileToMove.Name)</a></td>
                     </tr>
                     <tr>
                         <th>Source file LastWriteTime</th>
