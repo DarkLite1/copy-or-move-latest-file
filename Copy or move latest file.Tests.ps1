@@ -178,12 +178,12 @@ Describe 'send a summary mail' {
             ($Priority -eq 'Normal') -and
             ($Subject -eq 'File moved') -and
             ($Message -like "*<b>Move</b> the most recently edited file with <b>extension '.csv'</b> from the <a href=`"$($testNewParams.SourceFolder)`">source folder</a> to the <a href=`"$($testNewParams.DestinationFolder)`">destination folder</a> and <b>over write the destination file</b> when it exists already.*
-        *<th>Destination file</th>*
-        *<td><a href=`"$($testNewParams.DestinationFolder + '\A.csv')`">A.csv</a></td>*
-        *<th>Source file</th>*
-        *<td>*
-        *<a href=`"$($testNewParams.SourceFolder + '\1.csv')`">1.csv</a><br>*
-        *LastWriteTime: *</td>*"
+            *<th>Source file</th>*
+            *<td>*
+            *<a href=`"$($testNewParams.SourceFolder + '\1.csv')`">1.csv</a><br>*
+            *LastWriteTime: *</td>*
+            *<th>Destination file</th>*
+            *<td><a href=`"$($testNewParams.DestinationFolder + '\A.csv')`">A.csv</a></td>*"
             )
         }
     }
@@ -203,12 +203,12 @@ Describe 'send a summary mail' {
             ($Priority -eq 'Normal') -and
             ($Subject -eq 'File moved') -and
             ($Message -like "*<b>Move</b> the most recently edited file with <b>extension '.csv'</b> from the <a href=`"$($testNewParams.SourceFolder)`">source folder</a> to the <a href=`"$($testNewParams.DestinationFolder)`">destination folder</a> and <b>over write the destination file</b> when it exists already.*
-        *<th>Destination file</th>*
-        *<td><a href=`"$($testNewParams.DestinationFolder + '\A.csv')`">A.csv</a></td>*
-        *<th>Source file</th>*
-        *<td>*
-        *<a href=`"$($testNewParams.SourceFolder + '\1.csv')`">1.csv</a><br>*
-        *LastWriteTime: *</td>*"
+            *<th>Source file</th>*
+            *<td>*
+            *<a href=`"$($testNewParams.SourceFolder + '\1.csv')`">1.csv</a><br>*
+            *LastWriteTime: *</td>*
+            *<th>Destination file</th>*
+            *<td><a href=`"$($testNewParams.DestinationFolder + '\A.csv')`">A.csv</a></td>*"
             )
         }
     }

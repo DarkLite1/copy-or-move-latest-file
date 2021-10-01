@@ -272,15 +272,15 @@ End {
                 <p>File details:</p>
                 <table>
                     <tr>
-                        <th>Destination file</th>
-                        <td><a href=`"$($copyParams.Destination)`">$($joinParam.ChildPath)</a></td>
-                    </tr>
-                    <tr>
                         <th>Source file</th>
                         <td>
                             <a href=`"$($fileToMove.FullName)`">$($fileToMove.Name)</a><br>
                             LastWriteTime: $(($fileToMove.LastWriteTime).ToString('dd/MM/yyyy HH:mm:ss'))
                         </td>
+                    </tr>
+                    <tr>
+                        <th>Destination file</th>
+                        <td><a href=`"$($copyParams.Destination)`">$($joinParam.ChildPath)</a></td>
                     </tr>
                 </table>
             "
