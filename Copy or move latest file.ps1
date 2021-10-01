@@ -273,7 +273,7 @@ End {
                 <table>
                     <tr>
                         <th>Destination file</th>
-                        <td><a href=`"$($copyParams.Destination)`">$($copyParams.Destination)</a></td>
+                        <td><a href=`"$($copyParams.Destination)`">$($joinParam.ChildPath)</a></td>
                     </tr>
                     <tr>
                         <th>Source file</th>
