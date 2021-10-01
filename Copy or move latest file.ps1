@@ -289,7 +289,7 @@ End {
                 </table>
             "
             $mailParams.subject = 'File {0}' -f $(
-                if ($Action = 'Move') { 'moved' } else { 'copied' }
+                if ($Action -eq 'Move') { 'moved' } else { 'copied' }
             )
             $mailParams.Priority = 'Normal'
         }
