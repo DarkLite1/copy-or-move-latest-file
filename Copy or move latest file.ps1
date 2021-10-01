@@ -130,7 +130,7 @@ Param (
     [String]$DestinationFileName,
     [String]$FileExtension,
     [String]$FileNameStartsWith,
-    [Switch]$OverWrite,
+    [Boolean]$OverWrite,
     [String[]]$MailTo,
     [String]$LogFolder = $env:POWERSHELL_LOG_FOLDER,
     [String]$ScriptAdmin = $env:POWERSHELL_SCRIPT_ADMIN
@@ -272,11 +272,11 @@ End {
                 <p>File details:</p>
                 <table>
                     <tr>
-                        <th>Destination file name</th>
+                        <th>Destination file</th>
                         <td><a href=`"$($copyParams.Destination)`">$($copyParams.Destination)</a></td>
                     </tr>
                     <tr>
-                        <th>Source file name</th>
+                        <th>Source file</th>
                         <td><a href=`"$($fileToMove.FullName)`">$($fileToMove.FullName)</a></td>
                     </tr>
                     <tr>

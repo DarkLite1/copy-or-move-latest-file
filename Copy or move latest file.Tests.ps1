@@ -143,18 +143,18 @@ Describe 'when the file name already exists in the destination folder' {
     }
     It 'it is over written when OverWrite is true' {
         $testNewParams = $testParams.clone()
+        $testNewParams.OverWrite = $true
         $testNewParams.Remove('FileExtension')
         $testNewParams.Remove('DestinationFileName')
-        $testNewParams.Remove('OverWrite')
-        . $testScript @testNewParams -OverWrite
+        . $testScript @testNewParams
         $actual = Get-ChildItem $testParams.DestinationFolder
         Get-Content -Path $actual.FullName | Should -BeExactly 'A'
     } 
     It 'it is not over written when OverWrite is false and an error is thrown' {
         $testNewParams = $testParams.clone()
+        $testNewParams.OverWrite = $false
         $testNewParams.Remove('FileExtension')
         $testNewParams.Remove('DestinationFileName')
-        $testNewParams.Remove('OverWrite')
         { . $testScript @testNewParams } | 
         Should -Throw "The file '$($testDestinationFile.FullName)' already exists in the destination folder, use 'OverWrite'*"
         $actual = Get-ChildItem $testParams.DestinationFolder
@@ -178,9 +178,9 @@ Describe 'send a summary mail' {
             ($Priority -eq 'Normal') -and
             ($Subject -eq 'File moved') -and
             ($Message -like "*<b>Move</b> the most recently edited file with <b>extension '.csv'</b> from the <a href=`"$($testNewParams.SourceFolder)`">source folder</a> to the <a href=`"$($testNewParams.DestinationFolder)`">destination folder</a> and <b>over write the destination file</b> when it exists already.*
-        *<th>Destination file name</th>*
+        *<th>Destination file</th>*
         *<td><a href=`"$($testNewParams.DestinationFolder + '\A.csv')`">$($testNewParams.DestinationFolder + '\A.csv')</a></td>*
-        *<th>Source file name</th>*
+        *<th>Source file</th>*
         *<td><a href=`"$($testNewParams.SourceFolder + '\1.csv')`">$($testNewParams.SourceFolder + '\1.csv')</a></td>*
         *<th>Source file LastWriteTime</th>*"
             )
@@ -202,9 +202,9 @@ Describe 'send a summary mail' {
             ($Priority -eq 'Normal') -and
             ($Subject -eq 'File moved') -and
             ($Message -like "*<b>Move</b> the most recently edited file with <b>extension '.csv'</b> from the <a href=`"$($testNewParams.SourceFolder)`">source folder</a> to the <a href=`"$($testNewParams.DestinationFolder)`">destination folder</a> and <b>over write the destination file</b> when it exists already.*
-        *<th>Destination file name</th>*
+        *<th>Destination file</th>*
         *<td><a href=`"$($testNewParams.DestinationFolder + '\A.csv')`">$($testNewParams.DestinationFolder + '\A.csv')</a></td>*
-        *<th>Source file name</th>*
+        *<th>Source file</th>*
         *<td><a href=`"$($testNewParams.SourceFolder + '\1.csv')`">$($testNewParams.SourceFolder + '\1.csv')</a></td>*
         *<th>Source file LastWriteTime</th>*"
             )
