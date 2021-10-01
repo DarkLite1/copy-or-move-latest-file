@@ -277,11 +277,10 @@ End {
                     </tr>
                     <tr>
                         <th>Source file</th>
-                        <td><a href=`"$($fileToMove.FullName)`">$($fileToMove.Name)</a></td>
-                    </tr>
-                    <tr>
-                        <th>Source file LastWriteTime</th>
-                        <td>$(($fileToMove.LastWriteTime).ToString('dd/MM/yyyy HH:mm:ss'))</td>
+                        <td>
+                            <a href=`"$($fileToMove.FullName)`">$($fileToMove.Name)</a><br>
+                            LastWriteTime: $(($fileToMove.LastWriteTime).ToString('dd/MM/yyyy HH:mm:ss'))
+                        </td>
                     </tr>
                 </table>
             "

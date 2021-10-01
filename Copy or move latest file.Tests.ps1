@@ -181,8 +181,9 @@ Describe 'send a summary mail' {
         *<th>Destination file</th>*
         *<td><a href=`"$($testNewParams.DestinationFolder + '\A.csv')`">A.csv</a></td>*
         *<th>Source file</th>*
-        *<td><a href=`"$($testNewParams.SourceFolder + '\1.csv')`">1.csv</a></td>*
-        *<th>Source file LastWriteTime</th>*"
+        *<td>*
+        *<a href=`"$($testNewParams.SourceFolder + '\1.csv')`">1.csv</a><br>*
+        *LastWriteTime: *</td>*"
             )
         }
     }
@@ -205,8 +206,9 @@ Describe 'send a summary mail' {
         *<th>Destination file</th>*
         *<td><a href=`"$($testNewParams.DestinationFolder + '\A.csv')`">A.csv</a></td>*
         *<th>Source file</th>*
-        *<td><a href=`"$($testNewParams.SourceFolder + '\1.csv')`">1.csv</a></td>*
-        *<th>Source file LastWriteTime</th>*"
+        *<td>*
+        *<a href=`"$($testNewParams.SourceFolder + '\1.csv')`">1.csv</a><br>*
+        *LastWriteTime: *</td>*"
             )
         }
     }
