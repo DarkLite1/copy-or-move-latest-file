@@ -258,9 +258,13 @@ End {
                         " with <b>extension '$FileExtension'</b>" 
                     }
                 )
+                $(if ($FileNameStartsWith) { 
+                        " where the file name <b>starts with '$FileNameStartsWith'</b>" 
+                    }
+                )
                 $(" from the <a href=`"$SourceFolder`">source folder</a> to the <a href=`"$DestinationFolder`">destination folder</a>")
                 $(if ($OverWrite) { 
-                        " and <b>over write the destination file</b> when it exists already" 
+                        " and <b>overwrite the destination file</b> when it exists already" 
                     }
                 )
                 '.<p>'
