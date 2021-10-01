@@ -248,7 +248,7 @@ End {
         $mailParams.Message = (
             $( 
                 '<p>'
-                $(if ($Action = 'Move') {
+                $(if ($Action -eq 'Move') {
                         '<b>Move</b> the most recently edited file'
                     }
                     else {
