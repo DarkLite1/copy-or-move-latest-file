@@ -273,17 +273,17 @@ End {
         
         if ($fileToMove) {
             $mailParams.Message += "
-                <p>File details:</p>
+                <p>$(if ($Action -eq 'Move') { 'Moved' } else { 'Copied' }) file:</p>
                 <table>
                     <tr>
-                        <th>Source file</th>
+                        <th>Source</th>
                         <td>
                             <a href=`"$($fileToMove.FullName)`">$($fileToMove.Name)</a><br>
                             LastWriteTime: $(($fileToMove.LastWriteTime).ToString('dd/MM/yyyy HH:mm:ss'))
                         </td>
                     </tr>
                     <tr>
-                        <th>Destination file</th>
+                        <th>Destination</th>
                         <td><a href=`"$($copyParams.Destination)`">$($joinParam.ChildPath)</a></td>
                     </tr>
                 </table>
