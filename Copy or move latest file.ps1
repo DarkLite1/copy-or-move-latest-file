@@ -296,7 +296,7 @@ End {
         else {
             $mailParams.Message += '<p>No file found in the source folder matching the search criteria.</p>'
             $mailParams.subject = 'No file {0}' -f $(
-                if ($Action = 'Move') { 'moved' } else { 'copied' }
+                if ($Action -eq 'Move') { 'moved' } else { 'copied' }
             )
             $mailParams.Priority = 'High'
         }
