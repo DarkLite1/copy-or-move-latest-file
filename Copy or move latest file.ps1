@@ -264,7 +264,7 @@ End {
                 )
                 $(" from the <a href=`"$SourceFolder`">source folder</a> to the <a href=`"$DestinationFolder`">destination folder</a>")
                 $(if ($OverWrite) { 
-                        " and <b>overwrite the destination file</b> when it exists already" 
+                        " and <b>overwrite</b> the destination file when it exists already" 
                     }
                 )
                 '.<p>'

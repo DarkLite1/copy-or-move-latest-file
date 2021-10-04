@@ -161,23 +161,24 @@ Describe 'when the file name already exists in the destination folder' {
         Get-Content -Path $actual.FullName | Should -BeExactly 'B'
     }
 }
-Describe 'send a summary mail' {
-    It 'to users and the admin when MailTo is used' {
+Describe 'send a summary mail when' {
+    BeforeAll {
         New-Item (Join-Path $testParams.SourceFolder '1.csv') -ItemType File
-
         $testNewParams = $testParams.clone()
         $testNewParams.FileExtension = '.csv'
         $testNewParams.DestinationFileName = 'A'
-        $testNewParams.Action = 'Move'
         $testNewParams.MailTo = 'bob@contoso.com'
+    }
+    It 'a file is copied' {
+        $testNewParams.Action = 'Copy'
         . $testScript @testNewParams
     
         Should -Invoke Send-MailHC -Exactly 1 -ParameterFilter {
             ($To -eq 'bob@contoso.com') -and
             ($Bcc -eq $ScriptAdmin) -and
             ($Priority -eq 'Normal') -and
-            ($Subject -eq 'File moved') -and
-            ($Message -like "*<b>Move</b> the most recently edited file with <b>extension '.csv'</b> from the <a href=`"$($testNewParams.SourceFolder)`">source folder</a> to the <a href=`"$($testNewParams.DestinationFolder)`">destination folder</a> and <b>overwrite the destination file</b> when it exists already.*
+            ($Subject -eq 'File copied') -and
+            ($Message -like "*<b>Copy</b> the most recently edited file with <b>extension '.csv'</b> from the <a href=`"$($testNewParams.SourceFolder)`">source folder</a> to the <a href=`"$($testNewParams.DestinationFolder)`">destination folder</a> and <b>overwrite</b> the destination file when it exists already.*
             *<th>Source file</th>*
             *<td>*
             *<a href=`"$($testNewParams.SourceFolder + '\1.csv')`">1.csv</a><br>*
@@ -187,28 +188,35 @@ Describe 'send a summary mail' {
             )
         }
     }
-    It 'only to the admin when MailTo is not used' {
-        New-Item (Join-Path $testParams.SourceFolder '1.csv') -ItemType File
-
-        $testNewParams = $testParams.clone()
-        $testNewParams.FileExtension = '.csv'
-        $testNewParams.DestinationFileName = 'A'
+    It 'a file is moved' {
         $testNewParams.Action = 'Move'
-        $testNewParams.Remove('MailTo')
         . $testScript @testNewParams
     
         Should -Invoke Send-MailHC -Exactly 1 -ParameterFilter {
-            ($To -eq $ScriptAdmin) -and
-            (-not $Bcc) -and
+            ($To -eq 'bob@contoso.com') -and
+            ($Bcc -eq $ScriptAdmin) -and
             ($Priority -eq 'Normal') -and
             ($Subject -eq 'File moved') -and
-            ($Message -like "*<b>Move</b> the most recently edited file with <b>extension '.csv'</b> from the <a href=`"$($testNewParams.SourceFolder)`">source folder</a> to the <a href=`"$($testNewParams.DestinationFolder)`">destination folder</a> and <b>overwrite the destination file</b> when it exists already.*
+            ($Message -like "*<b>Move</b> the most recently edited file with <b>extension '.csv'</b> from the <a href=`"$($testNewParams.SourceFolder)`">source folder</a> to the <a href=`"$($testNewParams.DestinationFolder)`">destination folder</a> and <b>overwrite</b> the destination file when it exists already.*
             *<th>Source file</th>*
             *<td>*
             *<a href=`"$($testNewParams.SourceFolder + '\1.csv')`">1.csv</a><br>*
             *LastWriteTime: *</td>*
             *<th>Destination file</th>*
             *<td><a href=`"$($testNewParams.DestinationFolder + '\A.csv')`">A.csv</a></td>*"
+            )
+        }
+    }
+    It 'no file is found in the source folder' {
+        $testNewParams.Action = 'Move'
+        . $testScript @testNewParams
+    
+        Should -Invoke Send-MailHC -Exactly 1 -ParameterFilter {
+            ($To -eq 'bob@contoso.com') -and
+            ($Bcc -eq $ScriptAdmin) -and
+            ($Priority -eq 'High') -and
+            ($Subject -eq 'No file moved') -and
+            ($Message -like "*<b>Move</b> the most recently edited file with <b>extension '.csv'</b> from the <a href=`"$($testNewParams.SourceFolder)`">source folder</a> to the <a href=`"$($testNewParams.DestinationFolder)`">destination folder</a> and <b>overwrite</b> the destination file when it exists already.*No file found in the source folder matching the search criteria*"
             )
         }
     }
