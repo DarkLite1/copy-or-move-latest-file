@@ -2,11 +2,6 @@
 #Requires -Version 5.1
 
 BeforeAll {
-    $MailAdminParams = {
-        ($To -eq $ScriptAdmin) -and ($Priority -eq 'High') -and 
-        ($Subject -eq 'FAILURE')
-    }
-
     $testScript = $PSCommandPath.Replace('.Tests.ps1', '.ps1')
     $testParams = @{
         ScriptName          = 'Test (Brecht)'
@@ -18,6 +13,12 @@ BeforeAll {
         OverWrite           = $true
         MailTo              = @('bob@contoso.com')
         LogFolder           = New-Item 'TestDrive:/log' -ItemType Directory
+        ScriptAdmin         = 'admin@contoso.com'
+    }
+
+    $MailAdminParams = {
+        ($To -eq $testParams.ScriptAdmin) -and ($Priority -eq 'High') -and 
+        ($Subject -eq 'FAILURE')
     }
 
     Mock Send-MailHC
