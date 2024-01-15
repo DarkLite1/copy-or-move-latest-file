@@ -1,0 +1,10 @@
+{
+  "Action": "Copy",
+  "SourceFolder": "\\\\SERVER1\\folder",
+  "DestinationFolder": "\\\\SERVER2\\folder",
+  "DestinationFileName": "Source",
+  "FileExtension": ".csv",
+  "FileNameStartsWith": "Apple_",
+  "OverWrite": true,
+  "MailTo": "bob@contoso.com"
+}

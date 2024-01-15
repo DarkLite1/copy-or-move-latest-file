@@ -124,18 +124,8 @@ Param (
     [Parameter(Mandatory)]
     [String]$ScriptName,
     [Parameter(Mandatory)]
-    [String]$SourceFolder,
-    [Parameter(Mandatory)]
-    [String]$DestinationFolder,
-    [Parameter(Mandatory)]
-    [ValidateSet('Copy', 'Move')]
-    [String]$Action,
-    [String]$DestinationFileName,
-    [String]$FileExtension,
-    [String]$FileNameStartsWith,
-    [Boolean]$OverWrite,
-    [String[]]$MailTo,
-    [String]$LogFolder = $env:POWERSHELL_LOG_FOLDER,
+    [String]$ImportFile,
+    [String]$LogFolder = "$env:POWERSHELL_LOG_FOLDER\File or folder\Copy or move latest file\$ScriptName",
     [String[]]$ScriptAdmin = @(
         $env:POWERSHELL_SCRIPT_ADMIN,
         $env:POWERSHELL_SCRIPT_ADMIN_BACKUP
@@ -161,6 +151,60 @@ Begin {
         }
         Catch {
             throw "Failed creating the log folder '$LogFolder': $_"
+        }
+        #endregion
+
+        #region Import .json file
+        $M = "Import .json file '$ImportFile'"
+        Write-Verbose $M; Write-EventLog @EventVerboseParams -Message $M
+
+        $file = Get-Content $ImportFile -Raw -EA Stop -Encoding UTF8 |
+        ConvertFrom-Json
+        #endregion
+
+        #region Test .json file properties
+        try {
+            if (-not ($MailTo = $file.MailTo)) {
+                throw "Property 'MailTo' not found"
+            }
+
+            if (-not ($SourceFolder = $file.SourceFolder)) {
+                throw "Property 'SourceFolder' not found"
+            }
+
+            if (-not (Test-Path -LiteralPath $SourceFolder -PathType Container)) {
+                throw "Source folder '$SourceFolder' not found"
+            }
+
+            if (-not ($DestinationFolder = $file.DestinationFolder)) {
+                throw "Property 'DestinationFolder' not found"
+            }
+
+            if (-not ($Action = $file.Action)) {
+                throw "Property 'Action' not found"
+            }
+
+            if (-not (Test-Path -LiteralPath $DestinationFolder -PathType Container)) {
+                throw "Destination folder '$DestinationFolder' not found"
+            }
+
+            if ($file.Action -notMatch '^Copy$|^Move$') {
+                throw "Property 'Action' with value '$($file.Action)' is not valid. Accepted values are 'Copy' or 'Move'."
+            }
+
+            try {
+                $OverWrite = [Boolean]::Parse($file.OverWrite)
+            }
+            catch {
+                throw "Property 'Overwrite' is not a boolean value"
+            }
+
+            $DestinationFileName = $file.DestinationFileName
+            $FileExtension = $file.SearchFor.FileExtension
+            $FileNameStartsWith = $file.SearchFor.FileNameStartsWith
+        }
+        catch {
+            throw "Input file '$ImportFile': $_"
         }
         #endregion
 
